@@ -10,18 +10,21 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install npm dependencies
         run: |
+          apt-get install imagemagick
           npm install
   build-android:
     needs: install-and-test
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
-      - name: Install npm dependencies
+      - name: Install dependencies
         run: |
+          apt-get install imagemagick
           npm install
-      - name: Rename App
+      - name: Rename App and Generate Icons
         run: |
           npx react-native-rename-next EasyApp -b com.withoutlogic.easyapp
+          npx app-icon generate --platforms=android
       - name: Build Apk
         run: |
           cd android
